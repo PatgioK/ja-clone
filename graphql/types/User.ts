@@ -1,7 +1,7 @@
 import { enumType, objectType, nonNull, stringArg, extendType } from "nexus";
 import { Task } from './Task'
 
-const Role = enumType ({
+const Role = enumType({
     name: 'Role',
     members: ['FREE', 'SUBSCRIBER']
 })
@@ -23,7 +23,7 @@ export const User = objectType({
                             id: parent.id,
                         },
                     })
-                .tasks()
+                    .tasks()
             }
         })
     },
@@ -47,7 +47,11 @@ export const UsersQuery = extendType({
                 email: nonNull(stringArg())
             },
             resolve(_parent, args, ctx) {
-                return ctx.prisma.user.findUnique()
+                return ctx.prisma.user.findUnique({
+                    where: {
+                        email: args.email
+                    },
+                })
             }
         })
     },
