@@ -9,7 +9,7 @@ export const Task = objectType ({
         t.string('title')
         t.string('description')
         t.string('status')
-        t.list.field('user'), {
+        t.list.field('user', {
             type: User,
             async resolve(parent, _args, ctx) {
                 return await ctx.prisma.task
@@ -20,7 +20,7 @@ export const Task = objectType ({
                     })
                     .users()
             }
-        }
+        })
     }
 })
 
