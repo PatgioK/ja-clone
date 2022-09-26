@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  FREE
+  SUBSCRIBED
+}
+
 model User {
   id String @id @default(cuid())
   name String?
@@ -22,10 +27,6 @@ model User {
   tasks Task[]
 }
 
-enum Role {
-  FREE
-  SUBSCRIBED
-}
 
 model Task {
   id String @id @default(uuid())
