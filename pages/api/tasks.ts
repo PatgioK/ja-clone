@@ -1,10 +1,13 @@
 import { ApolloServer } from "apollo-server-micro";
-import { typeDefs } from '../../graphql/schema';
+import { schema } from '../../graphql/schema';
 import { resolvers } from "../../graphql/resolvers";
+
+// npm i --save-dev @types/micro-cors
+// some modules dont include types for typescript
 import Cors from 'micro-cors';
 
 const cors = Cors()
-const apolloServer = new ApolloServer({ typeDefs, resolvers})
+const apolloServer = new ApolloServer({ schema, resolvers})
 const startServer = apolloServer.start();
 
 export default cors(async function handler(req, res) {
@@ -13,12 +16,11 @@ export default cors(async function handler(req, res) {
         return false
     }
     await startServer
-})
 
 await apolloServer.createHandler({
     path: '/api/tasks',
-}) (req, res)
-)
+}) (req, res);
+})
 
 
 export const config = {
