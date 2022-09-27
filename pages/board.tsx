@@ -6,6 +6,7 @@ import { TaskComponent } from '../components/taskComponent';
 import { BoardSection } from '../components/boardSection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { Button } from 'react-bootstrap'
 
 
 const AllTasksQuery = gql`
@@ -36,12 +37,12 @@ const Board = () => {
             <h1>project title</h1>
             <FontAwesomeIcon icon={faPlus} style={{color: '#6f7782'}} />
         </Row>
-        <div className="board-container d-flex flex-row flex-grow-1">
+        <div className="board-container flex-row d-flex flex-row flex-grow-1">
             {sections.map((section: string, idx: number) => {
                 let filteredData: Array<Task> = data ? data.tasks.filter((task:Task) => {return task.status===section}) : [];
                 return(
                     <>
-                    <BoardSection key={idx} title={section} tasks={filteredData}/>
+                    <BoardSection key={idx} title={section} tasks={filteredData} />
                     </>
                 )
             })}

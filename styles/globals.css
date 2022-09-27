@@ -57,5 +57,10 @@ a {
 }
 
 .task-container .card-body:hover {
-  background-color: rgba(55, 53, 47, 0.08);
+  background-color: rgba(55, 53, 47, 0.08) !important;
+}
+
+.is-empty {
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(232,236,238, 0.5), rgba(232, 236,238, 0) 100%);
 }
