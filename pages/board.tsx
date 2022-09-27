@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
+import { Header } from '../components/layout/Header';
 
 const AllTasksQuery = gql`
     query {
@@ -18,8 +19,9 @@ const Board = () => {
         console.log(data.tasks)
       }
     });
-  return (
+  return (<>
     <div>board</div>
+    </>
   )
 }
 
