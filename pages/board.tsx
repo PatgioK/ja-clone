@@ -7,6 +7,7 @@ import { BoardSection } from '../components/boardSection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Button } from 'react-bootstrap'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 
 const AllTasksQuery = gql`
@@ -32,11 +33,13 @@ const Board = () => {
     if (loading) return <p>Loading</p>
     if (error) return <p>Error</p>
   return (<>
+
     <div className='d-flex flex-column h-100 pt-3'>
         <Row>
             <h1>project title</h1>
             <FontAwesomeIcon icon={faPlus} style={{color: '#6f7782'}} />
         </Row>
+        <DragDropContext>
         <div className="board-container flex-row d-flex flex-row flex-grow-1">
             {sections.map((section: string, idx: number) => {
                 let filteredData: Array<Task> = data ? data.tasks.filter((task:Task) => {return task.status===section}) : [];
@@ -47,6 +50,7 @@ const Board = () => {
                 )
             })}
         </div>
+        </DragDropContext>
     </div>
     </>
   )
