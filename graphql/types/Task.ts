@@ -9,6 +9,7 @@ export const Task = objectType ({
         t.string('title')
         t.string('description')
         t.string('status')
+        t.string('userId')
         t.list.field('user', {
             type: User,
             async resolve(parent, _args, ctx) {
