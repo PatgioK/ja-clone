@@ -14,10 +14,7 @@ export default authHandler;
 const options = {
     providers: [
         EmailProvider({
-            // server: process.env.EMAIL_SERVER,
-            // from: process.env.EMAIL_FROM,
             // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
-
             server: {
                 host: process.env.SMTP_HOST,
                 port: Number(process.env.SMTP_PORT),
@@ -32,14 +29,3 @@ const options = {
     adapter: PrismaAdapter(prisma),
     secret: process.env.SECRET,
 }
-
-
-// export default NextAuth({
-//   adapter: PrismaAdapter(prisma),
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//     }),
-//   ],
-// })
