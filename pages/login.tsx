@@ -18,7 +18,6 @@ const Login = () => {
                     <Form>
                         <Button variant='primary' type='submit' onClick={() => signIn()}>Login</Button>
                     </Form>
-
         </div>
     )
 }

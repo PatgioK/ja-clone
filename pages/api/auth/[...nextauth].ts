@@ -25,7 +25,8 @@ const options = {
                     user: process.env.SMTP_USER,
                     pass: process.env.SMTP_PASSWORD,
                 }
-            }
+            },
+            from: process.env.SMTP_FROM,
         }),
     ],
     adapter: PrismaAdapter(prisma),
