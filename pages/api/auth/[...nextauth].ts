@@ -1,7 +1,7 @@
 // https://next-auth.js.org/adapters/prisma
 
 import NextAuth from "next-auth"
-import EmailProvider from `next-auth/providers/email`
+import EmailProvider from 'next-auth/providers/email'
 import { NextApiHandler } from "next"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
@@ -14,8 +14,8 @@ export default authHandler;
 const options = {
     providers: [
         EmailProvider({
-            server: process.env.EMAIL_SERVER,
-            from: process.env.EMAIL_FROM,
+            // server: process.env.EMAIL_SERVER,
+            // from: process.env.EMAIL_FROM,
             // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
 
             server: {
