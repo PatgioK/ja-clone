@@ -23,37 +23,42 @@ const AllTasksQuery = gql`
 
 const sections: Array<string> = ['Backlog', 'In Progress', 'Review', 'Done']
 
+const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result
+    console.log(result);
+}
+
 const Board = () => {
     const { data, loading, error } = useQuery(AllTasksQuery, {
-      onCompleted: data => {
-        console.log(data.tasks)
-      }
+        onCompleted: data => {
+            console.log(data.tasks)
+        }
     });
 
     if (loading) return <p>Loading</p>
     if (error) return <p>Error</p>
-  return (<>
+    return (<>
 
-    <div className='d-flex flex-column h-100 pt-3'>
-        <Row>
-            <h1>project title</h1>
-            <FontAwesomeIcon icon={faPlus} style={{color: '#6f7782'}} />
-        </Row>
-        <DragDropContext>
-        <div className="board-container flex-row d-flex flex-row flex-grow-1">
-            {sections.map((section: string, idx: number) => {
-                let filteredData: Array<Task> = data ? data.tasks.filter((task:Task) => {return task.status===section}) : [];
-                return(
-                    <>
-                    <BoardSection key={idx} title={section} tasks={filteredData} />
-                    </>
-                )
-            })}
+        <div className='d-flex flex-column h-100 pt-3'>
+            <Row>
+                <h1>project title</h1>
+                <FontAwesomeIcon icon={faPlus} style={{ color: '#6f7782' }} />
+            </Row>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <div className="board-container flex-row d-flex flex-row flex-grow-1">
+                    {sections.map((section: string, idx: number) => {
+                        let filteredData: Array<Task> = data ? data.tasks.filter((task: Task) => { return task.status === section }) : [];
+                        return (
+                            <>
+                                <BoardSection key={idx} title={section} tasks={filteredData} />
+                            </>
+                        )
+                    })}
+                </div>
+            </DragDropContext>
         </div>
-        </DragDropContext>
-    </div>
     </>
-  )
+    )
 }
 
 export default Board;
