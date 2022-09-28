@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery, useMutation } from '@apollo/client'
 import { Header } from '../components/layout/Header';
 import { Row } from 'react-bootstrap'
 import { TaskComponent } from '../components/taskComponent';
@@ -21,20 +21,42 @@ const AllTasksQuery = gql`
     }
 `
 
+const UpdateTaskMutation = gql`
+mutation UpdateTaskMutation($id: String!, $title:String, $description: String, $status: String!, $userId: String) {
+    updateTask(id: $id, title: $title, description: $description, status: $status, userId: $userId) {
+        id
+        title
+        description
+        status
+    }
+}
+`
+
 const sections: Array<string> = ['Backlog', 'In Progress', 'Review', 'Done']
 
-const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result
-    console.log(result);
-}
 
 const Board = () => {
+    const [updateTask] = useMutation(UpdateTaskMutation)
     const { data, loading, error } = useQuery(AllTasksQuery, {
         onCompleted: data => {
             console.log(data.tasks)
         }
     });
 
+    const onDragEnd = (result) => {
+        const { destination, source, draggableId } = result
+        console.log(result);
+    
+        if(!destination) return;
+        if(destination.droppableId === source.droppableId) return;
+    
+        updateTask({
+            variables: {
+                id: draggableId,
+                status:destination.droppableId
+            }
+        })
+    }
     if (loading) return <p>Loading</p>
     if (error) return <p>Error</p>
     return (<>
