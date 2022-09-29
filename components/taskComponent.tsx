@@ -25,11 +25,23 @@ mutation DeleteTaskMutation($id: String!){
 }
 `
 
+
+const AllUsersQuery = gql`
+query {
+    users{
+        id
+        name
+    }
+}
+`
+
 export const TaskComponent: React.FC<Task> = ({ title, description, id, status, boardCategory, index }) => {
     const [taskTitle, setTaskTitle] = useState(title)
     const [taskDesc, setTaskDesc] = useState(description)
     const [assignTo, setAssignTo] = useState('')
     const [showModal, setShowModal] = useState(false)
+
+    const { data: usersData, loading: usersLoading} = useQuery(AllUsersQuery);
 
     const [updateTask, { data, loading, error }] = useMutation(UpdateTaskMutation, {
         onCompleted(data) {
@@ -51,6 +63,14 @@ export const TaskComponent: React.FC<Task> = ({ title, description, id, status, 
 
     const handleTaskUpdate = (e) => {
         e.preventDefault()
+
+        let userId = '';
+        if(assignTo) {
+            userId = assignTo;
+        } else if (usersData) {
+            userId = usersData.users[0].id;
+        }
+
         updateTask({
             variables: {
                 title: taskTitle,

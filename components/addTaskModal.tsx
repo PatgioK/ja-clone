@@ -14,18 +14,21 @@ mutation CreateTask($id: String, $title:String!, $description: String!, $status:
 }
 `
 
-export const AddTaskModal = ({
-    showModal,
-    handleClose,
-    boardCategory
-}: {
-    boardCategory: String,
-    showModal: boolean,
-    handleClose: () => void
-}) => {
+const AllUsersQuery = gql`
+query {
+    users{
+        id
+        name
+    }
+}
+`
+
+export const AddTaskModal = ({ showModal, handleClose, boardCategory }: { boardCategory: String, showModal: boolean, handleClose: () => void }) => {
     const [taskTitle, setTaskTitle] = useState('')
     const [taskDesc, setTaskDesc] = useState('')
     const [assignTo, setAssignTo] = useState('')
+
+    const { data: usersData, loading: usersLoading} = useQuery(AllUsersQuery);
 
     const [createTask, { data, loading, error }] = useMutation(CreateTaskMutation, {
         onCompleted: (data) => {
@@ -37,6 +40,12 @@ export const AddTaskModal = ({
 
     const handleTaskCreate = (e) => {
         e.preventDefault()
+        let userId = '';
+        if(assignTo) {
+            userId = assignTo;
+        } else if (usersData) {
+            userId = usersData.users[0].id;
+        }
         createTask({
             variables: {
                 title: taskTitle,
@@ -65,7 +74,16 @@ export const AddTaskModal = ({
                     </Form.Group>
                     <Form.Group className='pb-3'>
                         <Form.Label>Assign To</Form.Label>
-                        <Form.Control value={assignTo} onChange={(e) => setAssignTo(e.target.value)}></Form.Control>
+                        <Form.Select value={assignTo} onChange={(e) => setAssignTo(e.target.value)}>
+                            {
+                                usersData &&
+                                usersData.users.map((user: User) => {
+                                    return(
+                                        <option value={user.id} key={user.id}>{user.name}</option>
+                                    )
+                                })
+                            }
+                        </Form.Select>
                     </Form.Group>
                     <Button variant="primary" type='submit'>Submit</Button>
                 </Form>
