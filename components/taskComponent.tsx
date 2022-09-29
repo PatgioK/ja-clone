@@ -61,7 +61,7 @@ export const TaskComponent: React.FC<Task> = ({ title, description, id, status, 
         setShowModal(true);
     }
 
-    const handleTaskUpdate = (e) => {
+    const handleTaskUpdate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         let userId = '';
@@ -82,7 +82,7 @@ export const TaskComponent: React.FC<Task> = ({ title, description, id, status, 
         handleClose()
     }
 
-    const handleTaskDelete = (e) => {
+    const handleTaskDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         deleteTask({
             variables: {
                 id: id
@@ -105,7 +105,7 @@ export const TaskComponent: React.FC<Task> = ({ title, description, id, status, 
                     <Modal.Title> Update A Task</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleTaskUpdate}>
+                    <Form onSubmit={(e) => handleTaskUpdate(e)}>
                         <Form.Group className='pb-3'>
                             <Form.Label>Title</Form.Label>
                             <Form.Control type='text' value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)}></Form.Control>
@@ -120,7 +120,7 @@ export const TaskComponent: React.FC<Task> = ({ title, description, id, status, 
                         </Form.Group>
                         <div className='d-flex justify-content-between'>
                             <Button variant="primary" type='submit'>Update</Button>
-                            <Button onClick={handleTaskDelete}><FontAwesomeIcon icon={faTrash} style={{ color: '#44AAAA' }} />Delete</Button>
+                            <Button onClick={(e) => handleTaskDelete(e)}><FontAwesomeIcon icon={faTrash} style={{ color: '#44AAAA' }} />Delete</Button>
                         </div>
                     </Form>
                 </Modal.Body>

@@ -38,7 +38,7 @@ export const AddTaskModal = ({ showModal, handleClose, boardCategory }: { boardC
         }
     })
 
-    const handleTaskCreate = (e) => {
+    const handleTaskCreate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         let userId = '';
         if(assignTo) {
@@ -63,7 +63,7 @@ export const AddTaskModal = ({ showModal, handleClose, boardCategory }: { boardC
                 <Modal.Title> Create A Task</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={handleTaskCreate}>
+                <Form onSubmit={(e) => handleTaskCreate(e)}>
                     <Form.Group className='pb-3'>
                         <Form.Label>Title</Form.Label>
                         <Form.Control type='text' value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)}></Form.Control>
