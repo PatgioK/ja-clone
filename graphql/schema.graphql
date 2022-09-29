@@ -15,11 +15,6 @@ type Query {
   users: [User]!
 }
 
-enum Role {
-  FREE
-  SUBSCRIBER
-}
-
 type Task {
   createdAt: String
   description: String
@@ -35,6 +30,5 @@ type User {
   id: String
   image: String
   name: String
-  role: Role
   tasks: [Task]
 }

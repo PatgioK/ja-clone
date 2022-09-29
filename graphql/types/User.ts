@@ -1,10 +1,6 @@
 import { enumType, objectType, nonNull, stringArg, extendType } from "nexus";
 import { Task } from './Task'
 
-const Role = enumType({
-    name: 'Role',
-    members: ['FREE', 'SUBSCRIBER']
-})
 
 export const User = objectType({
     name: 'User',
@@ -13,7 +9,6 @@ export const User = objectType({
         t.string('name')
         t.string('email')
         t.string('image')
-        t.field('role', { type: Role })
         t.list.field('tasks', {
             type: Task,
             async resolve(parent, _args, ctx) {
