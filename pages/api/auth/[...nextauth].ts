@@ -29,3 +29,13 @@ const options = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
 };
+
+// export default NextAuth({
+//   adapter: PrismaAdapter(prisma),
+//   providers: [
+//     EmailProvider({
+//       server: process.env.EMAIL_SERVER,
+//       from: process.env.EMAIL_FROM,
+//     }),
+//   ],
+// });
