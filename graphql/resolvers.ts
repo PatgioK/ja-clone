@@ -6,6 +6,6 @@ export const resolvers = {
     // args object contains all graphql provided for field eg: an id
     // ctx (context) passing things resolver might need, eg: authentication code, db connections, custom fetch functions
     Query: {
-        tasks: async (_parents, args, ctx) => await ctx.prisma.task.findMany(),
+        tasks: async (_parents: any, args: any, ctx: { prisma: { task: { findMany: () => any; }; }; }) => await ctx.prisma.task.findMany(),
     }
 }
