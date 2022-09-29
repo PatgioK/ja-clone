@@ -9,7 +9,7 @@ const Login = () => {
 
     useEffect(() => {
         if(session) {
-            // router.push('/board')
+            router.push('/board')
             // signOut();
         }
     }, [session])
